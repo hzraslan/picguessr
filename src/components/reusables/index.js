@@ -1,6 +1,6 @@
 import FBaseImage from "./FireBaseImage";
-import Map from "./Map";
+import MapComp from "./Map";
 
 export {
-    Map, FBaseImage
+    MapComp, FBaseImage
 }
