@@ -1,13 +1,16 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import exifr from "exifr";
+import { FirebaseContext } from "./firebase/firebase-init";
 
 // const localS = (file) => window.localStorage.setItem("img", file.name);
 export default function App() {
+  const { firebase } = useContext(FirebaseContext);
   const [file, setFile] = useState("");
   const [imgSrc, setImgSrc] = useState();
   const [loading, setLoading] = useState(true);
   // const [gps, setGps] = useState({ latitude: 0, longitude: 0 });
   // const currentRef = useRef();
+
   const handleChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -30,8 +33,9 @@ export default function App() {
       try {
         let { latitude, longitude } = await exifr.gps(file);
         console.log(latitude, longitude);
+        firebase.addData("images", { latitude, longitude});
       } catch (e) {
-        console.error('"No gps Meta Data :) Try another pix"');
+        console.error('"No gps Meta Data :) Try another pix"', e);
         throw new Error("No gps Meta Data :) Try another pix");
       }
     }
@@ -49,24 +53,3 @@ export default function App() {
     </div>
   );
 }
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDr1nrXZlu5zHz_OJ8NtlTDWbwvNvx3vfY",
-//   authDomain: "picguessr-74fb2.firebaseapp.com",
-//   projectId: "picguessr-74fb2",
-//   storageBucket: "picguessr-74fb2.appspot.com",
-//   messagingSenderId: "1019944570937",
-//   appId: "1:1019944570937:web:4b5d7463f7eedf0b6b3de8",
-//   measurementId: "G-6V41DLDZ7Y"
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
