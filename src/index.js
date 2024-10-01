@@ -8,7 +8,7 @@ const firebase = new Firebase()
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <FirebaseContext.Provider value={firebase}>
+    <FirebaseContext.Provider value={{firebase}}>
       <App />
     </FirebaseContext.Provider>
   </React.StrictMode>
