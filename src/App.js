@@ -18,9 +18,6 @@ export default function App() {
   };
 
   const getLocationAndDateFromImage = async(file)=>{
-            // console.log(reader.result);
-            const url = await firebase.createGsReference("images/beachy_costal-2.jpeg")
-            setImgSrc(url);
     const result ={
       year: new Date(file.lastModifiedDate).getFullYear()
     }
@@ -70,7 +67,7 @@ export default function App() {
 
       <div>{!loading && <img id="output" src={imgSrc} alt={file.name} />}</div>
       <FBaseImage src="images/beachy_costal-2.jpeg" style={{width: "200px"}} />
-      <Map />
+      {/* <Map /> */}
     </div>
   );
 }
