@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import exifr from "exifr";
 import { FirebaseContext } from "./firebase/firebase-init";
-import FBaseImage from "./components/reusables/FireBaseImage";
+import {FBaseImage, Map} from "./components/reusables";
+
 
 // const localS = (file) => window.localStorage.setItem("img", file.name);
 export default function App() {
@@ -69,6 +70,7 @@ export default function App() {
 
       <div>{!loading && <img id="output" src={imgSrc} alt={file.name} />}</div>
       <FBaseImage src="images/beachy_costal-2.jpeg" style={{width: "200px"}} />
+      <Map />
     </div>
   );
 }
