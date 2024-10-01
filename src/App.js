@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import exifr from "exifr";
 import { FirebaseContext } from "./firebase/firebase-init";
+import FBaseImage from "./components/reusables/FireBaseImage";
 
 // const localS = (file) => window.localStorage.setItem("img", file.name);
 export default function App() {
@@ -15,6 +16,23 @@ export default function App() {
     setFile(event.target.files[0]);
   };
 
+  const getLocationAndDateFromImage = async(file)=>{
+            // console.log(reader.result);
+            const url = await firebase.createGsReference("images/beachy_costal-2.jpeg")
+            setImgSrc(url);
+    const result ={
+      year: new Date(file.lastModifiedDate).getFullYear()
+    }
+    let res = await exifr.gps(file);
+    if(res){
+      const { latitude, longitude }  = res
+      result.latitude = latitude
+      result.longitude = longitude
+      return result 
+    }
+    return null
+  }
+
   const readFile = async () => {
     const reader = new FileReader();
 
@@ -28,12 +46,11 @@ export default function App() {
       false
     );
     if (file) {
-      await reader.readAsDataURL(file);
-
+      reader.readAsDataURL(file);
       try {
-        let { latitude, longitude } = await exifr.gps(file);
-        console.log(latitude, longitude);
-        firebase.addData("images", { latitude, longitude});
+        getLocationAndDateFromImage(file)
+        // firebase.addData("images", { latitude, longitude});
+        // firebase.uploadFile(imgSrc, `images/${file.name}`)
       } catch (e) {
         console.error('"No gps Meta Data :) Try another pix"', e);
         throw new Error("No gps Meta Data :) Try another pix");
@@ -43,13 +60,15 @@ export default function App() {
   useEffect(() => {
     readFile();
   });
+
   return (
     <div className="App">
       <h1>Load an Image</h1>
       <h2>only React</h2>
       <input type="file" onChange={handleChange} />
 
-      <div>{!loading && <img id="output" src={imgSrc} />}</div>
+      <div>{!loading && <img id="output" src={imgSrc} alt={file.name} />}</div>
+      <FBaseImage src="images/beachy_costal-2.jpeg" style={{width: "200px"}} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
+import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,6 +27,7 @@ export class Firebase {
   constructor() {
     this.app = initializeApp(firebaseConfig);;
     this.db = getFirestore(this.app);
+    this.storage = getStorage(this.app)
   }
 
   async addData(collection, document) {
@@ -33,7 +35,28 @@ export class Firebase {
       const uuid = window.crypto.randomUUID();
       await setDoc(doc(this.db, collection, uuid), { id: uuid, ...document });
     } catch (e) {
-      console.error("Error adding document: ", e);
+      return null
+    }
+  }
+  async uploadFile (imageString, name){
+    try {
+      const storageRef = ref(this.storage, name)
+      const res = await uploadString(storageRef, imageString.replace( /^data:(.*);base64,/, '' ), 'base64')
+      return res.metadata.fullPath
+    } catch (error) {
+      return null
+    }
+  }
+  async  createGsReference (key){
+    try {
+      const url = await getDownloadURL(ref(this.storage,key))
+
+      if(url){
+        return url
+      }
+      return ""
+    } catch (error) {
+      return ""
     }
   }
 }
