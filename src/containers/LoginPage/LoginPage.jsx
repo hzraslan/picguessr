@@ -1,18 +1,23 @@
 import React from "react";
 import "./styles.scss";
 import River from "../../components/reusables/River/River";
-import { FirebaseContext } from "./../../firebase/firebase-init";
+import {useAppContext} from "../../App"
+
 
 const LoginPage = () => {
-  const { firebase } = React.useContext(FirebaseContext);
+  const { state, dispatch } = useAppContext();
+  const { firebase } = state;
 
   const login = async () => {
     try {
-      await firebase.createUser("samcohen2@gmail.com", "password");
+      const user = await firebase.createUser("samcohen23@gmail.com", "password");
+      dispatch({type: 'updateUser', payload: user});
     } catch (e) {
       console.log(e);
     }
   };
+
+
 
   return (
     <div className="login-page d-flex flex-column justify-content-between w-100 h-100">

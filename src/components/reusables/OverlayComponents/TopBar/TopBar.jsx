@@ -2,10 +2,12 @@ import React from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
+import {useAppContext} from "../../../../App"
 const TopBar = () => {
+  const { state } = useAppContext();
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
+  console.log("state=> ", state);
   return (
     <div className="topbar w-100 p-3 position-fixed bg-transparent">
       {!isLoginPage ? (

@@ -2,9 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import exifr from "exifr";
 import { FirebaseContext } from "../firebase/firebase-init";
 import {FBaseImage, Map} from "../components/reusables";
+import {useAppContext} from "../App"
 
 const FileUpload = () => {
-    const { firebase } = useContext(FirebaseContext);
+  const { state } = useAppContext()
+  const {firebase} = state
+  console.log(firebase)
     const [file, setFile] = useState("");
     const [imgSrc, setImgSrc] = useState();
     const [loading, setLoading] = useState(true);

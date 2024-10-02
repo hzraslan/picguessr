@@ -54,7 +54,7 @@ const Globe = () => {
   };
 
   useEffect(() => {
-    if (scene == undefined) {
+    if (scene === undefined) {
       init();
       window.addEventListener("resize", onWindowResize, false);
     }
