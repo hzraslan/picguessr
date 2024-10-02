@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,6 +29,7 @@ export class Firebase {
     this.app = initializeApp(firebaseConfig);;
     this.db = getFirestore(this.app);
     this.storage = getStorage(this.app)
+    this.auth = getAuth(this.app)
   }
 
   async addData(collection, document) {
@@ -47,7 +49,7 @@ export class Firebase {
       return null
     }
   }
-  async  createGsReference (key){
+  async createGsReference (key){
     try {
       const url = await getDownloadURL(ref(this.storage,key))
 
@@ -57,6 +59,14 @@ export class Firebase {
       return ""
     } catch (error) {
       return ""
+    }
+  }
+  async createUser(email, password){
+    try {
+      const user = await createUserWithEmailAndPassword(this.auth, email, password)
+      return user
+    } catch (error) {
+      return null
     }
   }
 }
