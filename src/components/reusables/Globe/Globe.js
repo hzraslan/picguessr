@@ -46,10 +46,22 @@ const Globe = () => {
     camera.position.z = 10;
   };
 
+  const onWindowResize = () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  };
+
   useEffect(() => {
     if (scene == undefined) {
       init();
+      window.addEventListener("resize", onWindowResize, false);
     }
+
+    return () => {
+      window.removeEventListener("resize", onWindowResize);
+    };
   }, []);
 
   return <div id="canvas" ref={refContainer} className="position-absolute"></div>;
