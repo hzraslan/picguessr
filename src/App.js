@@ -20,7 +20,6 @@ export default function App() {
   });
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
       <div className="app w-100 h-100">
         <BrowserRouter>
           <TopBar />
@@ -31,6 +30,5 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </AppContext.Provider>
   );
 }
