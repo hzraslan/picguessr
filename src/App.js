@@ -10,6 +10,7 @@ export default function App() {
   const [file, setFile] = useState("");
   const [imgSrc, setImgSrc] = useState();
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState(40.733523)
   // const [gps, setGps] = useState({ latitude: 0, longitude: 0 });
   // const currentRef = useRef();
 
@@ -61,13 +62,13 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Load an Image</h1>
+      <h1 onClick={()=>setLocation(30.733523)}>Load an Image</h1>
       <h2>only React</h2>
       <input type="file" onChange={handleChange} />
 
       <div>{!loading && <img id="output" src={imgSrc} alt={file.name} />}</div>
       <FBaseImage src="images/beachy_costal-2.jpeg" style={{width: "200px"}} />
-      <MapComp />
+      <MapComp lat={location} />
     </div>
   );
 }
