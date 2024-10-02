@@ -3,16 +3,37 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import "./styles.scss";
 
-const Globe = ({ }) => {
+const Globe = ({}) => {
   const refContainer = useRef(null);
-  let scene, camera, renderer, cube;
+  let scene, camera, renderer, globe;
+  const loader = new GLTFLoader();
 
   const animate = () => {
     requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    globe.rotation.x += 0.003;
+    globe.rotation.y += 0.003;
     renderer.render(scene, camera);
   };
+
+  const loadGlobe = () => {
+    loader.load(
+      "lowpoly_origami_planet_earth.glb",
+      function (gltf) {
+        globe = gltf.scene;
+        scene.add(globe);
+        animate();
+      }
+    );
+  };
+
+  const addLight = () => {
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(5, 3, 5);
+    scene.add(light);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight);
+  }
 
   const init = () => {
     scene = new THREE.Scene();
@@ -22,14 +43,10 @@ const Globe = ({ }) => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     refContainer.current && refContainer.current.appendChild(renderer.domElement);
 
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    loadGlobe();
+    addLight();
 
-    camera.position.z = 5;
-
-    animate();
+    camera.position.z = 10;
   };
 
   useEffect(() => {
