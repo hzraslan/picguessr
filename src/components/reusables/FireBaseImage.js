@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FirebaseContext } from "../../firebase/firebase-init";
+import {useAppContext} from "../../App"
+
 const FBaseImage = ({style, src})=>{
-    const { firebase } = useContext(FirebaseContext);
+    const { state } = useAppContext()
+    const {firebase} = state
     const [finalSrc, setFinalSrc] = useState(null)
 
     useEffect(()=>{

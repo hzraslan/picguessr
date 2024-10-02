@@ -14,7 +14,7 @@ const LandingPage = () => {
       <Globe />
       <div className="center-title d-flex flex-column m-auto">
         <img src="assets/images/logo.svg" alt="logo" className="pb-2" />
-        <Button bsPrefix="home-button" onClick={() => navigate("/upload")}>EXPLORE</Button>
+        <Button bsPrefix="home-button" onClick={() => navigate("/create-a-game")}>EXPLORE</Button>
       </div>
       <BottomBar />
     </div>
