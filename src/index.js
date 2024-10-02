@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Firebase, FirebaseContext } from "./firebase/firebase-init";
+import 'bootstrap/dist/css/bootstrap.css';
 
 const firebase = new Firebase();
 const root = ReactDOM.createRoot(document.getElementById("root"));
