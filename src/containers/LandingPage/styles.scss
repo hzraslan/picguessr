@@ -1,4 +1,19 @@
 .home{
     background-color: transparent;
     font-family: 'Oswald', sans-serif;
+
+    &-button{
+        background-color: #f9a825;
+        color: #fff;
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover{
+            background-color: #f57c00;
+        }
+    }
 }

@@ -16,7 +16,7 @@ const Globe = () => {
   };
 
   const loadGlobe = () => {
-    loader.load("lowpoly_origami_planet_earth.glb", function (gltf) {
+    loader.load("assets/models/lowpoly_origami_planet_earth.glb", function (gltf) {
       globe = gltf.scene;
       scene.add(globe);
       animate();

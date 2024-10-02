@@ -4,6 +4,7 @@ import "./styles.scss";
 import TopBar from "../../components/reusables/OverlayComponents/TopBar";
 import BottomBar from "../../components/reusables/OverlayComponents/BottomBar";
 import Globe from "../../components/reusables/Globe/Globe";
+import { Button } from "react-bootstrap";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -12,8 +13,8 @@ const LandingPage = () => {
       <TopBar />
       <Globe />
       <div className="center-title d-flex flex-column m-auto">
-        <h1>Welcome to the Landing Page</h1>
-        <button onClick={() => navigate("/upload")}>Click me</button>
+        <img src="assets/images/logo.svg" alt="logo" className="pb-2" />
+        <Button bsPrefix="home-button" onClick={() => navigate("/upload")}>EXPLORE</Button>
       </div>
       <BottomBar />
     </div>
