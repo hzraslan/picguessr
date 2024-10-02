@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import "./styles.scss";
 
-const Globe = ({}) => {
+const Globe = () => {
   const refContainer = useRef(null);
   let scene, camera, renderer, globe;
   const loader = new GLTFLoader();
@@ -16,14 +16,11 @@ const Globe = ({}) => {
   };
 
   const loadGlobe = () => {
-    loader.load(
-      "lowpoly_origami_planet_earth.glb",
-      function (gltf) {
-        globe = gltf.scene;
-        scene.add(globe);
-        animate();
-      }
-    );
+    loader.load("lowpoly_origami_planet_earth.glb", function (gltf) {
+      globe = gltf.scene;
+      scene.add(globe);
+      animate();
+    });
   };
 
   const addLight = () => {
@@ -33,7 +30,7 @@ const Globe = ({}) => {
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);
-  }
+  };
 
   const init = () => {
     scene = new THREE.Scene();
@@ -50,9 +47,9 @@ const Globe = ({}) => {
   };
 
   useEffect(() => {
-    if (window.threeSceneLoaded === true) return;
-    init();
-    window.threeSceneLoaded = true;
+    if (scene == undefined) {
+      init();
+    }
   }, []);
 
   return <div id="canvas" ref={refContainer} className="position-absolute"></div>;
